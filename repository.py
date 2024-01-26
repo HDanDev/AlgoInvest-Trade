@@ -1,19 +1,23 @@
-import json
-
+import csv
+from share import Share
 
 class Repository:
-    def __init__(self, json_file):
-        self._json_file = json_file
+    def __init__(self, csv_file):
+        self._csv_file = csv_file
 
     @property
-    def json_file(self):
-        return self._json_file
+    def csv_file(self):
+        return self._csv_file
 
-    @json_file.setter
-    def json_file(self, value):
-        self._json_file = value
-
-    def read_json(self):
-        with open(self._json_file, 'r') as file:
-            data = json.load(file)
-        return data
+    @csv_file.setter
+    def csv_file(self, value):
+        self._csv_file = value
+    
+    def read_csv(self):
+        shares = []
+        with open(self._csv_file, 'r') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                share = Share(row['name'], row['price'], row['profit'])
+                shares.append(share)
+        return shares
