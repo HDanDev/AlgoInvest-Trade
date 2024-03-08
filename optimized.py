@@ -9,6 +9,28 @@ VALID_SHARES = [share for share in DATASET if share.price > 0]
 # PRICES = [share.price for share in DATASET]
 # PROFITS = [share.profit for share in DATASET]
 
+# names = [
+#     "Share-ECAQ",
+#     "Share-IXCI",
+#     "Share-FWBE",
+#     "Share-ZOFA",
+#     "Share-PLLK",
+#     "Share-YFVZ",
+#     "Share-ANFX",
+#     "Share-PATS",
+#     "Share-NDKR",
+#     "Share-ALIY",
+#     "Share-JWGF",
+#     "Share-JGTW",
+#     "Share-FAPS",
+#     "Share-VCAX",
+#     "Share-LFXB",
+#     "Share-DWSK",
+#     "Share-XQII",
+#     "Share-ROOM"
+# ]
+# selected_objects = [obj for obj in VALID_SHARES if obj.name in names]
+
 def knapsack(actions, budget):
     n = len(actions)
     dp = [[0] * (budget + 1) for _ in range(n + 1)]
@@ -37,3 +59,5 @@ for action in selected_actions:
 print("Total price:", sum(action.price for action in selected_actions) / 100, "$")
 print("Total profit:", total_profit / 100, "%")
 print("Total profit (calculated):", sum(action.profit for action in selected_actions) / 100, "%")
+# print("Total price:", sum(action.price for action in selected_objects) / 100, "$")
+# print("Total profit (calculated):", sum(action.profit for action in selected_objects) / 100, "%")
