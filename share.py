@@ -1,8 +1,8 @@
 class Share:
     def __init__(self, name, price, profit):
         self._name = name
-        self._price = float(price)
-        self._profit = float(profit)
+        self._price = int(float(price) * 100)
+        self._profit = int(float(profit) * 100)
         
     @property
     def name(self):
@@ -27,6 +27,12 @@ class Share:
     @profit.setter
     def profit(self, value):
         self._profit = value
+        
+    def get_price(self):
+        return float(self._price / 100)
+            
+    def get_profit(self):
+        return float(self._profit / 100)
 
     def __str__(self):
-        return f"{self.name} - Price: {self.price}, Profit: {self.profit}"
+        return f"{self.name} - Price: {self.price / 100}$, Profit: {self.profit / 100}%"

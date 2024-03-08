@@ -2,7 +2,8 @@ from repository import Repository
 from itertools import combinations
 
 
-CSV_FILE= "dataset.csv"
+# CSV_FILE= "dataset.csv"
+CSV_FILE= "dataset2_Python+P7.csv"
 DATASET = Repository(CSV_FILE).read_csv()
 BUDGET_LIMIT = 500
 
@@ -24,4 +25,5 @@ def find_best_investment():
 
 best_combination, max_profit = find_best_investment()
 
+print(best_combination)
 print("Profit maximal après 2 ans:", max_profit ,"%")
