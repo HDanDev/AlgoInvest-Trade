@@ -1,8 +1,11 @@
+from decimal import Decimal, ROUND_HALF_UP
+
 class Share:
     def __init__(self, name, price, profit):
         self._name = name
         self._price = int(float(price) * 100)
         self._profit = int(float(profit) * 100)
+        self._profit_ratio = self.rounded((float(price) * (float(profit) / 100)))
         
     @property
     def name(self):
@@ -28,11 +31,22 @@ class Share:
     def profit(self, value):
         self._profit = value
         
-    def get_price(self):
-        return float(self._price / 100)
+    @property
+    def profit_ratio(self):
+        return self._profit_ratio
+
+    @profit_ratio.setter
+    def profit_ratio(self, value):
+        self._profit_ratio = value
             
+    def get_price(self):
+        return self.rounded(self._price / 100)
+                
     def get_profit(self):
-        return float(self._profit / 100)
+        return self.rounded(self._profit / 100)
 
     def __str__(self):
-        return f"{self.name} - Price: {self.price / 100}$, Profit: {self.profit / 100}%"
+        return f"{self.name} - Price: {self.get_price()}$, Profit(%): {self.get_profit()}%, Profit($): {self._profit_ratio}$"
+    
+    def rounded(self, value):
+        return Decimal(value).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
