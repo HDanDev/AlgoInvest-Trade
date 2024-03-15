@@ -17,7 +17,7 @@ def find_best_investment():
             total_cost = sum(action.price for action in combination)
 
             if total_cost <= BUDGET_LIMIT:
-                profit = sum(action.profit for action in combination)
+                profit = sum(action.profit_ratio for action in combination)
                 if profit > max_profit:
                     max_profit = profit
                     best_combination = combination
@@ -28,4 +28,6 @@ best_combination, max_profit = find_best_investment()
 
 for share in best_combination:
     print(share)
-print("Profit maximal après 2 ans:", max_profit / 100 ,"%")
+print("Total price of bought actions:", sum(action.get_price() for action in best_combination) ,"$")
+print("Total profit after 2 years:", max_profit ,"$")
+print("Total profit after 2 years (calculated):", sum(action.profit_ratio for action in best_combination) ,"$")
