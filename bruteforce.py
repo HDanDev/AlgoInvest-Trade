@@ -1,33 +1,32 @@
-from repository import Repository
 from itertools import combinations
+from algo import Algo
+from displayer import *
+import time
 
+class Bruteforce(Algo):
+    
+    def __init__(self, dataset, budget_limit, set_name, is_displaying_result=False, is_displaying_list=False):
+        super().__init__(dataset, budget_limit, set_name, is_displaying_result, is_displaying_list)
+        self._displayer = Displayer(f"Bruteforce ({self._set_name})")
+        
+    def find_best_investment_bruteforce(self):
+        start_time = time.time()
+        best_combination = []
+        max_profit = 0
 
-CSV_FILE= "dataset.csv"
-# CSV_FILE= "dataset2_Python+P7.csv"
-DATASET = Repository(CSV_FILE).read_csv()
-BUDGET_LIMIT = 500 * 100
-VALID_SHARES = [share for share in DATASET if share.price > 0]
+        for r in range(1, len(self._dataset) + 1):
+            for combination in combinations(self._dataset, r):
+                total_cost = sum(action.price for action in combination)
 
-def find_best_investment():
-    best_combination = []
-    max_profit = 0
-
-    for r in range(1, len(VALID_SHARES) + 1):
-        for combination in combinations(VALID_SHARES, r):
-            total_cost = sum(action.price for action in combination)
-
-            if total_cost <= BUDGET_LIMIT:
-                profit = sum(action.profit_ratio for action in combination)
-                if profit > max_profit:
-                    max_profit = profit
-                    best_combination = combination
-
-    return best_combination, max_profit
-
-best_combination, max_profit = find_best_investment()
-
-for share in best_combination:
-    print(share)
-print("Total price of bought actions:", sum(action.get_price() for action in best_combination) ,"$")
-print("Total profit after 2 years:", max_profit ,"$")
-print("Total profit after 2 years (calculated):", sum(action.profit_ratio for action in best_combination) ,"$")
+                if total_cost <= self._budget_limit:
+                    profit = sum(action.profit_ratio for action in combination)
+                    if profit > max_profit:
+                        max_profit = profit
+                        best_combination = combination
+                        
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        
+        self.display_info (elapsed_time, best_combination, max_profit)
+        
+        return best_combination, max_profit, elapsed_time
