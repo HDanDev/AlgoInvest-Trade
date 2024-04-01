@@ -19,11 +19,22 @@ class Displayer:
         for elem in list:
             print(elem)
         
-    def display_duration(self, duration):
+    def display_duration(self, duration, is_printable=True):
         minutes = int(duration // 60)
         seconds = int(duration % 60)
         milliseconds = int((duration % 1) * 1000)
-        
-        formatted_time = "{:02d}:{:02d}.{:03d}".format(minutes, seconds, milliseconds)
-        
-        print(f"[{self._title}] Process completed after: {formatted_time}")
+        hours = minutes // 60
+        minutes %= 60
+        days = hours // 24
+        hours %= 24
+
+        formatted_time = ""
+        if days != 0:
+            formatted_time += f"{days}d "
+        if hours != 0 or days != 0:
+            formatted_time += f"{hours}h:"
+        formatted_time += "{:02d}m:{:02d}.{:03d}s".format(minutes, seconds, milliseconds)
+
+        if is_printable:
+            print(f"[{self._title}] Process completed after: {formatted_time}")
+        return formatted_time
