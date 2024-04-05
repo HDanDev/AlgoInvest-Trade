@@ -1,6 +1,5 @@
 from bruteforce import Bruteforce
 from optimized import Optimized
-from dataset import Dataset
 from optimized import *
 from displayer import *
 from share import Share
